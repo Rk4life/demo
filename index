@@ -1,0 +1,23 @@
+//Run doker build
+properties([disableConcurrentbuilds()])
+
+pipeline {
+     agent{
+         label 'master'
+         }
+     options {
+         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+         timestamps()
+    }
+    strages { 
+        stage("create docker image") {
+             steps {
+                echo "============ start building test image=================="
+                dir ('/') {
+                        sh 'docker build . '
+                  }
+               }
+            }
+        }
+   }
+  
